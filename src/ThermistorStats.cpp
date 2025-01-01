@@ -1,4 +1,4 @@
-#include "ThermistorStats.h"
+#include <ThermistorStats.h>
 
 ThermistorStats::ThermistorStats(int buffer_size)
     : _size(buffer_size), _data_array(buffer_size) {}
