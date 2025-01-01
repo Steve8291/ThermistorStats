@@ -1,0 +1,13 @@
+# Syntax Colouring Map for ThermistorStats
+
+# Data types (KEYWORD1)
+ThermistorStats   KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+resize              KEYWORD2
+add                 KEYWORD2
+getMedian           KEYWORD2
+isBufferFull        KEYWORD2
+getStdDev           KEYWORD2
+getElement          KEYWORD2
+getSortedElement    KEYWORD2
