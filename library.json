@@ -1,0 +1,23 @@
+{
+  "name": "ThermistorStats",
+  "keywords": "stats, standard deviation, median, mutable, buffer",
+  "description": "Mutable buffer for analog.Read() values",
+  "authors":
+  [
+    {
+      "name": "Steve Hambling",
+      "email": "hambling8@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Steve8291/ThermistorStats.git"
+  },
+  "version": "0.1.00",
+  "license": "MIT",
+  "frameworks": "*",
+  "platforms": "*",
+  "headers": "ThermistorStats.h"
+}
