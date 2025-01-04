@@ -17,8 +17,8 @@ void ThermistorStats::add(int16_t value) {
         _data_sorted = false;
     } else {
         _element = 0;
-        _buffer_full = true;
         _data_ordered = true;
+        _buffer_full = true;
     }
 }
 
