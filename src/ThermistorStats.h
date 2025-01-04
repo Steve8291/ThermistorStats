@@ -23,7 +23,7 @@ public:
 
     bool isBufferFull() const;
 
-    float getStdDev() const;
+    float getStdDev();
 
     // Returns 0 for any missing values when buffer is not full.
     // Returns -1 for all values if called after getSortedElement() or getMedian()
@@ -32,9 +32,12 @@ public:
     // Returns 0 for any missing values when buffer is not full.
     int16_t getSortedElement(int element);
 
+    // Zeros the buffer and sets .isBufferFull(false);
+    void zeroBuffer();
+
 private:
-    int _size;
     std::vector<int16_t> _data_array;
+    int _size;
     int _element;
     bool _buffer_full;
     bool _data_sorted;
