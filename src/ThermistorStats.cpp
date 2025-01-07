@@ -1,5 +1,6 @@
 #include <ThermistorStats.h>
 
+
 ThermistorStats::ThermistorStats(int buffer_size)
     : _size(buffer_size), _data_array(buffer_size) {}
 
@@ -18,6 +19,7 @@ void ThermistorStats::add(int16_t value) {
     } else {
         _element = 0;
         _data_ordered = true;
+        _data_sorted = false;
         _buffer_full = true;
     }
 }
@@ -28,24 +30,24 @@ void ThermistorStats::add(int16_t value) {
 // Calling .getMedian() will reset .isBufferFull() to false.
 int16_t ThermistorStats::getMedian() {
     int16_t median;
+    bool odd_buffer_size = _size % 2;  // evaluates to 1 (true) if odd.
 
     if (!_data_sorted) {
-        if (_size % 2 == 1) {
+        if (odd_buffer_size) {
             nth_element(_data_array.begin(), _data_array.begin() + _size / 2, _data_array.end());
-            median = _data_array[_size / 2];
         } else {
             nth_element(_data_array.begin(), _data_array.begin() + _size / 2 - 1, _data_array.end());
-            median = (_data_array[_size / 2 - 1] + _data_array[_size / 2]) / 2.0 + 0.5;  // +0.5 used to round to int
-        }
-    } else {
-        if (_size % 2 == 1) {
-            median = _data_array[_size / 2];
-        } else {
-            median = (_data_array[_size / 2 - 1] + _data_array[_size / 2]) / 2.0 + 0.5;  // +0.5 used to round to int
         }
     }
+    
+    if (odd_buffer_size) {
+        median = _data_array[_size / 2];
+        } else {
+        median = (_data_array[_size / 2 - 1] + _data_array[_size / 2]) / 2.0 + 0.5;  // +0.5 used to round to int
+    }
+
     _data_ordered = false;
-    _buffer_full = false;
+    _buffer_full = false;  // Reset buffer flag
     return median;
 }
 
@@ -66,9 +68,27 @@ float ThermistorStats::getStdDev() {
         sq_dev_sum += deviation * deviation;
     }
 
-    _buffer_full = false;
+    _buffer_full = false;  // Reset buffer flag
     return sqrt(sq_dev_sum / _size);
 }
+
+
+void ThermistorStats::compareFirstLast() const {
+    int avg_last3 = 0;
+    
+    for (int i = _size - 3; i < _size; ++i) {
+        avg_last3 += _data_array[i];
+    }
+    avg_last3 = avg_last3 / 3.0 + 0.5;
+    Serial.print(avg_last3);
+    Serial.print(" --> ");
+    for (int i = 0; i < _size && _data_array[i] < avg_last3; ++i) {
+        Serial.print(_data_array[i]);
+        Serial.print(" ");
+    }
+    Serial.println();
+}
+
 
 // Returns 0 for any missing values when buffer is not full.
 // Returns -1 for all values if called after getSortedElement() or getMedian()

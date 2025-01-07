@@ -25,6 +25,11 @@ public:
 
     float getStdDev();
 
+    // Serial.print average of last 3 elements --> List of first elements less than avg.
+    // Used to determine if enough time has elapsed to charge capacitor.
+    // If cap delay is long enough you will see only an occasional 1 or 2 items in list.
+    void compareFirstLast() const;
+
     // Returns 0 for any missing values when buffer is not full.
     // Returns -1 for all values if called after getSortedElement() or getMedian()
     int16_t getElement(int element) const;
