@@ -73,17 +73,14 @@ float ThermistorStats::getStdDev() {
 }
 
 
-void ThermistorStats::compareFirstLast() const {
-    int avg_last3 = 0;
-    
-    for (int i = _size - 3; i < _size; ++i) {
-        avg_last3 += _data_array[i];
-    }
-    avg_last3 = avg_last3 / 3.0 + 0.5;
-    Serial.print(avg_last3);
+void ThermistorStats::printUnstable() {
+    int16_t median = getMedian();
+    int allowed_variance = 10;  // Allowed variance below median
+    int median_allowance = median - allowed_variance;
+    Serial.print(median);
     Serial.print(" --> ");
-    for (int i = 0; i < _size && _data_array[i] < avg_last3; ++i) {
-        Serial.print(_data_array[i]);
+    for (int i = 0; i < _size && _data_array[i] < median_allowance; ++i) {
+        Serial.print(_data_array[i])
         Serial.print(" ");
     }
     Serial.println();
