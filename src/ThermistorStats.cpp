@@ -80,7 +80,7 @@ void ThermistorStats::printUnstable() {
     Serial.print(median);
     Serial.print(" --> ");
     for (int i = 0; i < _size && _data_array[i] < median_allowance; ++i) {
-        Serial.print(_data_array[i])
+        Serial.print(_data_array[i]);
         Serial.print(" ");
     }
     Serial.println();
