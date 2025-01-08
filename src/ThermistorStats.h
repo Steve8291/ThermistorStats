@@ -28,7 +28,7 @@ public:
     // Serial.print median --> List of first elements less than median - allowed_variance.
     // Used to determine if enough time has elapsed to charge capacitor.
     // If cap delay is long enough you will see only an occasional 1 or 2 items in list.
-    void printUnstable;
+    void printUnstable();
 
     // Returns 0 for any missing values when buffer is not full.
     // Returns -1 for all values if called after getSortedElement() or getMedian()
